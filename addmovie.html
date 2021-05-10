@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+	 <link rel="stylesheet" href="css/bootstrap.min.css" />        
+    <link rel="stylesheet" href="css/bootstrap-theme.css" />
+    <link rel="stylesheet" href="css/gallery.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<title>Add Movie</title>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#add").click(function(){
+				// event.preventDefault();
+
+				var name = $('#name').val();
+	  			var genre = $('#genre').val();
+	  			var description = $('#description').val();
+	  			var rating = $('#rating').val();
+	  			var price = $('#price').val();
+	  			var quantity = $('#quantity').val();	  			
+	  			var path = $('#path').val();
+
+				$.post("addmovie.php",{name:name,genre:genre,description:description,rating:rating,price:price,quantity:quantity,path:path}, function(response){
+					
+  					if(response.trim()==="1"){
+  						alert("Success");
+  						console.log("response:if"+response);  											
+  						window.location.reload(true);
+  					}
+  					else{
+  						console.log("response:else"+response);   						
+  						alert("An Error occurred. Please try again");
+  					}
+  					
+  				});
+			});
+		});
+	</script>
+</head>
+<body style="background-color:#AAAACC">
+<form style="margin:50px">
+	<div class="form-group container">
+		<label>Name</label> <input type="text" class="form-control" name="name" id="name"><br>
+		<label>Genre</label>
+		
+		<select name="genre" id="genre" class="form-control">			
+		  <option value="Comedy">Comedy</option>
+		  <option value="Action">Action</option>
+		  <option value="Fiction">Fiction</option>
+		  <option value="Drama">Drama</option>			
+		</select>
+		<br>
+		<label>Description</label><input type="text" class="form-control" name="description" id="description"><br>
+		<label>Rating</label><input type="text" class="form-control" name="rating" id="rating">	<br>
+		<label>Price</label><input type="text" class="form-control" name="price" id="price">	<br>
+		<label>Quantity</label><input type="text" class="form-control" name="quantity" id="quantity">	<br>
+		<label>Image</label><input type="text" class="form-control" name="path" id="path"><br>
+		<input type="button" class="btn btn-primary" name="submit" id="add" value="Submit">
+	</div>
+	
+</form>
+</body>
+</html>

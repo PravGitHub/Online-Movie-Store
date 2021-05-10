@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Movie Store</title>
+    
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />        
+    <link rel="stylesheet" href="css/bootstrap-theme.css" />
+    <link rel="stylesheet" href="css/gallery.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+
+    <link rel="stylesheet" href="css/owl.carousel.css" />
+    <link rel="stylesheet" href="css/owl.theme.default.min.css" />
+
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
+     -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+     <script type="text/javascript" src="js/jquery.min.js"></script>
+     <script type="text/javascript" src="js/owl.carousel.js"></script>
+     <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="homepage.js"></script>
+    <script type="text/javascript" src="search.js"></script>
+    <!-- <script type="text/javascript">
+        $(document).ready(function(){
+
+            $("#search").click(function(){
+                var genre=$("#genre").val();
+                var text=$("#searchtext").val();
+                console.log("genre:"+genre);
+                console.log("text:"+text);
+
+                $.ajax(
+                {
+                     url: "search.php",
+                     data:{genre:genre,text:text},
+                     dataType: "json",
+
+                     success: function(data) {
+                        $(".gallery").empty();
+
+                        $.each(data, function(index, element) {
+                            var append1="<div class='preview item'><p align='center' style='color:blue;'>"+element.name+"</p>";
+                            var append2="<div class='conatiner'><img class='imgitem' src=images/movies/"+element.path+" alt='"+element.name+"'></div><br>";
+                            var append0="";
+                            var append3="";
+                            var append4="";
+                            $user=element.user;
+                            if(element.user=="admin@email.com"){
+                                append3="<button class='btn btn-info update' alt='"+element.name+"'>Update</button>";
+                                append4="<button class='btn btn-danger delete' style='margin-left:5px' alt='"+element.name+"'>Delete</button></div>";
+                                $(".gallery").append(append1+append2+append0+append3+append4); 
+                                
+                                
+                            }
+                            else{
+                                append3="<button align='center' class='btn btn-primary' id='addtocart' alt='"+element.name+"'>Add to cart</button></div>";
+                                $(".gallery").append(append1+append2+append0+append3); 
+
+                            }       
+                        });
+
+
+                     },error: function() 
+                        { 
+                            alert("Error!!");  
+                        }
+                });
+            });
+        });
+    </script> -->
+</head>
+
+<body>
+    <header>
+        
+        <div class="topHeaderRow">
+            <div class="container" id="toprow">
+                <!-- <div class="pull-left">
+                    <p style="color:yellow; font-size:20px">Movies</p>
+                </div>
+                <div class="pull-right">
+                    <ul class="list-inline">
+                        <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+                        <li><a href="signup.html"><span class="glyphicon glyphicon-log-in"></span>Sign Up</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+
+                    </ul>
+                </div> -->
+            </div>
+        </div> 
+        <!-- end topHeaderRow -->
+
+        <nav class="navbar navbar-default ">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="menu">
+                    <!-- <ul class="nav navbar-nav navbar-left">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Browse <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Countries</a></li>
+                                <li><a href="#">Images</a></li>
+                                <li><a href="#">Posts</a></li>
+                            </ul>
+                        </li>
+                    </ul> -->
+
+
+                    <div class="navbar-form navbar-right">                       
+        
+                        <select name="genre" id="genre" class="form-control">  
+                          <option value=""></option>         
+                          <option value="Comedy">Comedy</option>
+                          <option value="Action">Action</option>
+                          <option value="Fiction">Fiction</option>
+                          <option value="Drama">Drama</option>          
+                        </select>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search" id="searchtext">
+                        </div>
+                        <button id="search" class="btn btn-primary">Search</button>
+                        <a href="shoppingcart.html" class="btn btn-success" style='margin-left:10px' id="shop">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
+                        </a>
+                        <a href="history.html" class="btn btn-success" style='margin-left:10px' id="history">
+                        <span class="glyphicon glyphicon-list-alt"></span> History
+                        </a>
+                        <a href="logout.php" class="btn btn-danger" style='margin-left:10px'><span class="glyphicon glyphicon-log-out"></span>Log Out</a>
+                        <!-- <button class="fa fa-shopping-cart fa-1.5x"></button> -->
+                    </div>
+
+                </div>
+                <!-- /.navbar-collapse -->
+
+
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </header>
+    
+
+
+    <!-- Page Content -->
+    <main class="container">     
+        <!--<button id="press" onclick="pressed()">Click Me!</button> -->
+        <!-- <div id='overlay' class='container'>
+            <label>Name</label> <input type="text" class="form-control" name="name" id="name"><br>
+            <label>Genre</label>
+            
+            <select name="genre" id="genre" class="form-control">           
+              <option value="Comedy">Comedy</option>
+              <option value="Action">Action</option>
+              <option value="Fiction">Fiction</option>
+              <option value="Drama">Drama</option>          
+            </select>
+            <br>
+            <label>Description</label><input type="text" class="form-control" name="description" id="description"><br>
+            <label>Rating</label><input type="text" class="form-control" name="rating" id="rating"> <br>
+            <label>Price</label><input type="text" class="form-control" name="price" id="price">    <br>
+            <label>Quantity</label><input type="text" class="form-control" name="quantity" id="quantity">   <br>
+            <label>Image</label><input type="text" class="form-control" name="path" id="path"><br>
+            <input type="button" class="btn btn-primary" name="submit" id="edit" value="Submit">
+        </div> -->
+        <div class="gallery owl-carousel owl-theme" id="disp">  
+                  
+        </div>
+        <br>
+        
+       <ul class="gallery" id="searchdisp">  
+                  
+        </ul> 
+    
+    </main>
+    
+    
+    
+    <footer>
+        <div class="container-fluid">
+                    <div class="row final">
+                <!-- <p>Copyright &copy; 2017 Creative Commons ShareAlike</p>
+                <p><a href="#">Home</a> / <a href="#">About</a> / <a href="#">Contact</a> / <a href="#">Browse</a></p> -->
+            </div>            
+        </div>        
+    </footer>   
+</body>
+
+</html>

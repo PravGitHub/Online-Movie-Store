@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />        
+    <link rel="stylesheet" href="css/bootstrap-theme.css" />
+    <link rel="stylesheet" href="css/gallery.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title>History</title>
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+			$.ajax(
+			{
+				 url: "history.php",
+				 dataType: "json",
+
+				 success: function(data) {	
+
+					$.each(data, function(index, element) {
+		        	var append1="<li class='preview'><p align='center'><b>"+element.name+"</b></p>";
+		        	var append2="<img height='250px' width='250px' src=images/movies/"+element.path+" alt='"+element.name+"'><br>";
+		        	var append3="<b style='color:green'>Purchased!! Enjoy The Show :) </b></li>";
+		        	
+		        	$(".gallery").append(append1+append2+append3); 		        	   		        			        	
+                   	
+        		});
+
+				}, error: function() 
+					{ 
+						alert("Error!!");  
+					}
+			});
+		});
+	</script>
+
+</head>
+
+<body background="images/movies/historybg.jpg">
+	<header style="opacity: 0.9">
+		<div class="container" style="background-color: #CCCCCC">
+			<h1 align="center">History</h1>
+		</div>
+	</header>
+	<main class="container" style="background-color: #AAAAAA; opacity: 0.9">
+		
+		<ul class="gallery">  
+              
+    	</ul>
+		
+		
+	</main>
+</body>
+</html>

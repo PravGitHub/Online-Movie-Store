@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />        
+    <link rel="stylesheet" href="css/bootstrap-theme.css" />
+    <link rel="stylesheet" href="css/gallery.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title>Shopping Cart</title>
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+			
+			$.ajax(
+			{
+				 url: "shoppingcart.php",
+				 dataType: "json",
+
+				 success: function(data) {	
+				 	console.log("inside success");
+					$.each(data, function(index, element) {
+		        	var append1="<li class='preview'><p align='center'><b>"+element.name+"</b></p>";
+		        	var append2="<img height='250px' width='250px' src=images/movies/"+element.path+" alt='"+element.name+"'><br>";
+		        	var append3="<b style='color:black'>Price: </b>"+element.price+"<br>";
+		        	var append4="<button class='btn btn-primary checkout' alt='"+element.name+"'>Check Out</button>";
+		        	var append5="<button class='btn btn-danger remove' style='margin-left:5px' alt='"+element.name+"'>Remove</button></li>";
+		        	$(".gallery").append(append1+append2+append3+append4+append5); 		        	   		        			        	
+                   	});
+
+                   	$(".checkout").click(function(){
+						var name=$(this).attr("alt");
+						console.log("name:"+name);
+						
+						$.post("checkout.php",{name:name},function(response){
+							console.log("response:"+response);
+		 						if(response.trim()=="1"){
+		 							alert("Purchased");
+		 							window.location.reload(true);
+		  					}
+		  					else{
+		  						console.log("response:else"+response);   						
+		  						alert("An Error occurred. Please try again");
+		  					}
+		 						
+		 				});
+					});
+
+					$(".remove").click(function(){
+						var name=$(this).attr("alt");
+						console.log("name:"+name);
+						
+						$.post("remove.php",{name:name},function(response){
+							console.log("response:"+response);
+		 						if(response.trim()=="1"){
+		 							alert("Removed");
+		 							window.location.reload(true);
+		  					}
+		  					else{
+		  						console.log("response:else"+response);   						
+		  						alert("An Error occurred. Please try again");
+		  					}
+		 						
+		 				});
+					});
+
+				}, error: function() 
+					{ 
+						alert("Error!!");  
+					}
+			});
+
+
+
+		});
+	</script>
+
+</head>
+
+<body background="images/movies/historybg.jpg">
+	<header style="opacity: 0.9">
+		<div class="container" style="background-color: #CCCCCC">
+			<h1 align="center">Shopping Cart</h1>
+		</div>
+	</header>
+	<main class="container" style="background-color: #AAAAAA; opacity: 0.9">
+		
+		<ul class="gallery">  
+              
+    	</ul>
+		
+		
+	</main>
+</body>
+</html>

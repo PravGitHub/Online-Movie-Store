@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+	
+	<title>Sign Up</title>
+
+	<script>
+
+		function checkpass(){			
+			const pass=$("#psswd").val();
+			var number = /([0-9])/;
+            var alphabets = /([a-zA-Z])/;
+            var special_characters = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
+
+            if(pass.length>7 && pass.match(number) && pass.match(alphabets) && pass.match(special_characters)){
+            	$("#psswd_status").html("");
+            	$("#psswd").css("border-color","green");
+            }
+            else{
+            	$("#psswd_status").html("<p style='color:red;'>Weak</p>");
+            	$("#psswd").css("border-color","red");
+            }
+		}
+
+		function check(){ 		
+	  		var psswd = $("#psswd").val();
+	  		var psswd2 = $("#psswd2").val();
+	  		if(psswd!=""){
+	  			if(psswd != psswd2){
+	  				$("#psswd2_status").html("<p style='color:red;'>Does not match</p>");
+	  				$("#psswd2").css("border-color","red");
+	  			}
+	  			else{
+	  				$("#psswd2_status").html("");
+	  				$("#psswd2").css("border-color","green");
+	  			}
+	  		}
+  		
+ 		}
+
+ 		$(document).ready(function(){
+
+ 			$("#email").blur(function(){
+ 				var email=$('#email').val();
+
+ 				$.post("validate.php",{email:email}, function(response){
+ 					console.log("responsebefore:"+response);
+  					if(response=="1"){
+  						console.log("response:"+response);
+  						$("#email_status").html("");
+  						$("#email").css("border-color","green");
+  						if(!email.includes("@email.com")){
+ 							$("#email_status").html("<p style='color:red;'>Should include @email.com</p>");
+ 							$("#email").css("border-color","red");
+ 						}
+  					}
+  					else if(response=="0"){
+  						console.log("response:"+response);
+  						$("#email_status").html("<p style='color:red;'>Already Exists</p>");
+  						$("#email").css("border-color","red");
+  					}
+  					
+  				});
+
+
+
+ 			});
+
+
+ 			$("#submit").click(function(event){
+ 				event.preventDefault();
+
+ 				var isValid = 0;
+  			console.log("validate");
+  			console.log("email"+$('#email').val());
+  			console.log("psswd"+$('#psswd').val());
+  			console.log("psswd2"+$('#psswd2').val());
+  			console.log("email_status:"+$("#email_status").text());
+  			console.log("psswd_status:"+$("#psswd_status").text());
+  			console.log("psswd2_status:"+$("#psswd2_status").text());
+  			var email = $('#email').val();
+  			var psswd = $('#psswd').val();
+  			var psswd2 = $('#psswd2').val();
+
+  			if(email != "" && $("#email_status").text()==""){
+  				isValid++;
+  				console.log("email"+$('#email').val());
+  			}
+  			if(psswd != "" && $("#psswd_status").text()==""){
+  				isValid++;
+  				console.log("psswd"+$('#psswd').val());
+  			}
+  			if(psswd2 != "" && $("#psswd2_status").val()==""){
+  				isValid++;
+  				console.log("psswd2"+$('#psswd2').val());
+  			}
+  			if(isValid==3){
+  				console.log("if"+isValid);
+  				
+  				$.post("signup.php",{email:email, psswd:psswd,psswd2:psswd2}, function(response){
+  					if(response=="1"){
+  						console.log("response"+response);
+  						window.location.replace("http://localhost/moviestore/index.html");
+  					}
+  					else if(response=="0"){
+  						window.location.replace("http://localhost/moviestore/signup.html");
+  					}
+  					
+  				});
+
+  			//  	$.ajax({					  
+					//   url: 'signup.php',
+					//   type: 'post',
+					//   dataType: "json",
+					//   data: {email:email, psswd:psswd,psswd2:psswd2},
+
+					//   success: function(){
+					//   	console.log("response");
+					//   	// if(response=="1"){
+					//   	// 	console.log("response1");
+					//   	// 	window.location.href = "http://localhost/moviestore/index.html";
+					//   	// }
+					//   	// else{
+					//   	// 	window.location.href = "http://localhost/moviestore/index.html";
+					//   	// }
+					  	
+					//   }
+
+					// });
+  			}
+  			else{
+  				console.log("else"+isValid);
+  				window.location.replace("http://localhost/moviestore/signup.html");
+  				
+  			}
+ 			});
+ 		});
+  //	function validateForm() {
+ 			
+  // 			var isValid = 0;
+  // 			console.log("validate");
+  // 			console.log("email"+$('#email').val());
+  // 			console.log("psswd"+$('#psswd').val());
+  // 			console.log("psswd2"+$('#psswd2').val());
+  // 			console.log("email_status:"+$("#email_status").text());
+  // 			console.log("psswd_status:"+$("#psswd_status").text());
+  // 			console.log("psswd2_status:"+$("#psswd2_status").text());
+  // 			var email = $('#email').val();
+  // 			var psswd = $('#psswd').val();
+  // 			var psswd2 = $('#psswd2').val();
+
+  // 			if(email != "" && $("#email_status").text()==""){
+  // 				isValid++;
+  // 				console.log("email"+$('#email').val());
+  // 			}
+  // 			if(psswd != "" && $("#psswd_status").text()==""){
+  // 				isValid++;
+  // 				console.log("psswd"+$('#psswd').val());
+  // 			}
+  // 			if(psswd2 != "" && $("#psswd2_status").val()==""){
+  // 				isValid++;
+  // 				console.log("psswd2"+$('#psswd2').val());
+  // 			}
+  // 			if(isValid==3){
+  // 				console.log("if"+isValid);
+  				
+  // 				$.post("signup.php",{email:email, psswd:psswd,psswd2:psswd2}, function(){
+  // 					alert("redirect");
+  // 				});
+
+  // 			// 	$.ajax({					  
+		// 			//   url: 'signup.php',
+		// 			//   type: 'post',
+		// 			//   dataType: "json",
+		// 			//   data: {email:email, psswd:psswd,psswd2:psswd2}
+
+		// 			//   success: function(response){
+		// 			//   	console.log("response"+response);
+		// 			//   	if(response=="1"){
+		// 			//   		console.log("response1");
+		// 			//   		window.location.href = "http://localhost/moviestore/index.html";
+		// 			//   	}
+		// 			//   	else{
+		// 			//   		window.location.href = "http://localhost/moviestore/index.html";
+		// 			//   	}
+					  	
+		// 			//   }
+
+		// 			// });
+  // 			}
+  // 			else{
+  // 				console.log("else"+isValid);
+  				
+  // 			}
+  			
+		// }
+</script>
+</head>
+<body>
+
+<form>
+	<div class="container">
+		<h3>Sign Up</h3>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" name="email" id="email">  
+    <span id="email_status"></span>  
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" placeholder="Password" name="psswd" id="psswd" onblur="checkpass()">
+    <span id="psswd_status"></span>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword2">Re-Enter Password</label>
+    <input type="password" class="form-control" placeholder="Password2" name="psswd2" id="psswd2" onblur="check()">
+    <span id="psswd2_status"></span>
+  </div>
+  <button class="btn btn-primary" id="submit">Submit</button>
+</div>
+</form>
+	<!-- <script type="text/javascript" src="signup.js"></script> -->
+
+</body>
+</html>
